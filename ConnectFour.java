@@ -47,10 +47,13 @@ public class ConnectFour {
         
         int thisX = theX;
         int rows = gameGrid.length;
-        double colW = 560 / gameColumns;
+        int gridWidth = 560;    //dimention fixed for now
+        double colW = gridWidth / gameColumns;
         int clickedCol = 0;
         int p = 0;
         int gridOffset = 20;
+        
+        double colsSum = colW;
         
         if (currentPlayer == 1){
             p = 1;
@@ -59,27 +62,13 @@ public class ConnectFour {
             p = 2;
         }
         
-        //To see what column was clicked and we need to update on the grid
-        if (thisX < colW + gridOffset) {
-            clickedCol = 0;
-        }
-        else if (thisX > colW + gridOffset && thisX < colW * 2 + gridOffset ) {
-            clickedCol = 1;
-        }
-        else if (thisX > colW * 2 + gridOffset && thisX < colW * 3 + gridOffset ) {
-            clickedCol = 2;
-        }
-        else if (thisX > colW * 3 + gridOffset && thisX < colW * 4 + gridOffset ) {
-            clickedCol = 3;
-        }
-        else if (thisX > colW * 4 + gridOffset && thisX < colW * 5 + gridOffset ) {
-            clickedCol = 4;
-        }
-        else if (thisX > colW * 5 + gridOffset && thisX < colW * 6 + gridOffset ) {
-            clickedCol = 5;
-        }
-        else if (thisX > colW * 6 + gridOffset) {
-            clickedCol = 6;
+       //To see what column was clicked regardless of number of columns. 
+        while (thisX > colsSum + gridOffset) {
+            colsSum = colsSum + colW;
+            clickedCol++;
+            if ( clickedCol > gameColumns - 1) { //Prevents Out of Bounds
+                clickedCol = gameColumns - 1;
+            }
         }
         
         //Checks for empty spaces (value = 0) starting from bottom of grid column
