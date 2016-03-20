@@ -13,6 +13,7 @@ public class ConnectFour {
   
     JFrame frame = new JFrame();
     private JButton topButton;
+    private boolean win;
     
     /**
      * Constructor.
@@ -25,7 +26,8 @@ public class ConnectFour {
         requiredConections = newRequiredConections;
         gameColumns = newCols;
         gameRows = newRows;
-        gameGrid = new double[gameColumns][gameRows]; 
+        gameGrid = new double[gameColumns][gameRows];
+        win = false;
     }
 
 
@@ -44,6 +46,8 @@ public class ConnectFour {
     
 
     public void redraw(int theX) {
+        if (win)
+        	return;
         
         int thisX = theX;
         int rows = gameGrid.length;
@@ -88,10 +92,10 @@ public class ConnectFour {
             }
         }
         initComponents();
-        hasWin();
+        win = hasWin();
     }
     
-    private void hasWin() { // This is incomplete
+    private boolean hasWin() { // This is incomplete
         
         int rq = requiredConections;
         String plyrClr = null;
@@ -114,6 +118,7 @@ public class ConnectFour {
                 	{
                 		// Will need to output winner on GUI. Would be cool to outline connection elements
                 		System.out.println(plyrClr + "player wins");
+                		win = true;
                         break;
                 	} 
                 }
@@ -122,8 +127,37 @@ public class ConnectFour {
                 	piece = gameGrid[i][j];
                 }     
             }
+            if (win) //Breaks out of outer loop
+            	break;
         }
-        //Code to check vertical and diagonal connections pending
+        
+        //Check vertical connections
+        for(int col = 0; col < gameColumns; col++) {
+        	//Scan every column looking for required connections, starting from the bottom-most row (gameRows - 1)
+        	double piece = gameGrid[gameRows - 1][col];
+        	int count = 1; 
+            for(int row = gameRows - 2; row >= 0; row--) {
+            	double current = gameGrid[row][col];
+                if (current != 0 && current == piece) {
+                	count++;
+                	if (count == requiredConections)
+                	{
+                		// Will need to output winner on GUI. Would be cool to outline connection elements
+                		System.out.println(plyrClr + "player wins");
+                		win = true;
+                        break;
+                	} 
+                }
+                else {
+                	count = 1;
+                	piece = gameGrid[row][col];
+                }     
+            }
+            if (win) //Break out of outer for loop
+            	break;
+        }
+        //TODO: Code to check diagonal connections pending
+        return win;
         
     }
 
