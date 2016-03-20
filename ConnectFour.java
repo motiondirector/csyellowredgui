@@ -101,18 +101,26 @@ public class ConnectFour {
         else {
             plyrClr = "Yellow ";
         }
+        
         //Check horizontal connections (Not working well. Got to make scalable to allow more or less connections)
         for(int i = 0; i < gameGrid.length; i++) {
-            for(int j = 0; j < gameGrid[0].length - rq; j++) {
-                if (gameGrid[i][j] != 0 
-                    && gameGrid[i][j] == gameGrid[i][j + 1] 
-                    && gameGrid[i][j] == gameGrid[i][j + 2] 
-                    && gameGrid[i][j] == gameGrid[i][j + 3]) {
-                    
-                    // Will need to output winner on GUI. Would be cool to outline connection elements
-                    System.out.println(plyrClr + "player wins");
-                    break;
+        	double piece = gameGrid[i][0]; // looks at the first piece of every row
+        	int count = 1; 
+            for(int j = 1; j < gameGrid[0].length; j++) {
+            	double current = gameGrid[i][j];
+                if (current != 0 && current == piece) {
+                	count++;
+                	if (count == requiredConections)
+                	{
+                		// Will need to output winner on GUI. Would be cool to outline connection elements
+                		System.out.println(plyrClr + "player wins");
+                        break;
+                	} 
                 }
+                else {
+                	count = 1;
+                	piece = gameGrid[i][j];
+                }     
             }
         }
         //Code to check vertical and diagonal connections pending
