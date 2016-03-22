@@ -169,7 +169,6 @@ public class ConnectFour {
             	break;
         }
         //TODO: Code to check diagonal connections pending
-<<<<<<< HEAD
         
         //check upper positive diagonals
         int lastColumn = gameGrid[0].length -1; 
@@ -273,8 +272,6 @@ public class ConnectFour {
 				}
 			}
 		}
-=======
->>>>>>> c5330f736dbb5c5b443217412acfc317137f3ed9
         return win;
         
     }
@@ -379,7 +376,6 @@ public class ConnectFour {
         });
         fileMenu.add(settings);
 
-<<<<<<< HEAD
 
         settingsWindow = new JFrame();
         settingsWindow.setLayout(new GridLayout(10, 10)); //Fixed size?
@@ -408,36 +404,6 @@ public class ConnectFour {
             	int newColumns = Integer.parseInt(columnInput.getText());
             	int newConnections = Integer.parseInt(connectionsInput.getText()); 
 
-=======
-
-        settingsWindow = new JFrame();
-        settingsWindow.setLayout(new GridLayout(10, 10)); //Fixed size?
-        JTextField reqConnections = new JTextField("Required Connections: ");
-        reqConnections.setEditable(false);
-        settingsWindow.add(reqConnections);
-        JTextField connectionsInput = new JTextField("" + requiredConections);
-        settingsWindow.add(connectionsInput);
-        JTextField numRows = new JTextField("Current # of Rows: ");
-        numRows.setEditable(false);
-        settingsWindow.add(numRows);
-        JTextField rowsInput = new JTextField("" + gameRows);
-        settingsWindow.add(rowsInput);
-        JTextField numCol = new JTextField("Current # of Columns: ");
-        numCol.setEditable(false);
-        settingsWindow.add(numCol);
-        JTextField columnInput = new JTextField("" + gameColumns);
-        settingsWindow.add(columnInput);
-        
-        JButton saveBtn = new JButton("Save");
-        saveBtn.addActionListener(new ActionListener () { 
-            @Override 
-            public void actionPerformed(ActionEvent event) {
-        	try {
-            	int newRows = Integer.parseInt(rowsInput.getText());
-            	int newColumns = Integer.parseInt(columnInput.getText());
-            	int newConnections = Integer.parseInt(connectionsInput.getText()); 
-
->>>>>>> c5330f736dbb5c5b443217412acfc317137f3ed9
             	//TODO: Need to include code to validate that numConnections is not bigger than the number of rows or columns
             	
         	if (newRows > ROW_MAX || newRows < ROW_MIN)
