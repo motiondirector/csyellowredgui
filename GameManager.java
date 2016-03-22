@@ -1,10 +1,12 @@
 
 public class GameManager {
 private GameBoard gameBoard;
+private boolean isRunning;
 	
 	public GameManager(int rows, int columns, int reqcon)
 	{
 		gameBoard = new GameBoard(rows, columns, reqcon);
+		isRunning = true;
 	}
 	
 	public int getReqCon()
@@ -30,6 +32,7 @@ private GameBoard gameBoard;
 	public void newGame()
 	{
 		gameBoard.clear();
+		setRunning(true);
 	}
 	
 	public int[][] getGameBoard()
@@ -37,4 +40,13 @@ private GameBoard gameBoard;
 		return gameBoard.gameGrid;
 	}
 	
+	public void setRunning(boolean running)
+	{
+	    isRunning = running;
+	}
+	
+	public boolean isRunning()
+	{
+	    return isRunning;
+	}
 }

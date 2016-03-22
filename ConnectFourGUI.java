@@ -11,12 +11,12 @@ public class ConnectFourGUI {
     private JFrame settingsWindow;
     
     //These values should be changed later. 3 and 12 were just random numbers I used for testing purposes.
-    private int ROW_MIN = 3;
-    private int ROW_MAX = 12;
-    private int COLUMN_MIN = 3;
-    private int COLUMN_MAX = 12;
-    private int CONNECTIONS_MIN = 3;
-    private int CONNECTIONS_MAX = 12;
+    private final int ROW_MIN = 3;
+    private final int ROW_MAX = 12;
+    private final int COLUMN_MIN = 3;
+    private final int COLUMN_MAX = 12;
+    private final int CONNECTIONS_MIN = 3;
+    private final int CONNECTIONS_MAX = 12;
 
     public ConnectFourGUI() {
         initComponents();
@@ -73,6 +73,7 @@ public class ConnectFourGUI {
         if (hasWin)
         {
         	JOptionPane.showMessageDialog(frame, plyrClr + "player wins", "Game finished", JOptionPane.PLAIN_MESSAGE);
+        	c4.setRunning(false);
         }
     }
     
@@ -142,7 +143,8 @@ public class ConnectFourGUI {
             // override only needed ones
             @Override //Now just overriding single method
             public void mousePressed(MouseEvent e) {
-
+        	if (!c4.isRunning())
+        	    return;
                 turn(e.getX()); 
                 
                 if (currentPlayer == 1){

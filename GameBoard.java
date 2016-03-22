@@ -212,7 +212,6 @@ public class GameBoard {
 			{	
 				gameGrid[i][j] = 0; 
 			}
-			System.out.println();
 		}
 	}
 	
