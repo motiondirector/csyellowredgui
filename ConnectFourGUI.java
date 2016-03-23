@@ -11,19 +11,52 @@ public class ConnectFourGUI {
     private JFrame settingsWindow;
     
     //These values should be changed later. 3 and 12 were just random numbers I used for testing purposes.
-    private final int ROW_MIN = 3;
-    private final int ROW_MAX = 12;
-    private final int COLUMN_MIN = 3;
-    private final int COLUMN_MAX = 12;
-    private final int CONNECTIONS_MIN = 3;
-    private final int CONNECTIONS_MAX = 12;
+    private static final int GRID_MIN = 3;
+    private static final int GRID_MAX = 12;
+    private static final int CONNECTIONS_MIN = 3;
+    private static final int CONNECTIONS_MAX = 12;
 
     public ConnectFourGUI() {
         initComponents();
     }
 
     public static void main(String[] args) {
-    	c4 = new GameManager(6, 7, 4);
+	
+	if (args.length == 0)
+	{
+	    //Default
+	    c4 = new GameManager(6, 7, 4);   
+	}
+	else if (args.length != 2)
+	{
+	    System.err.println("Usage: <gridsize> <number of required connections>");
+	    System.exit(1);
+	}
+	else
+	{
+	    try
+	    {
+		    int gridSize = Integer.parseInt(args[0]);
+		    int numReqConnect = Integer.parseInt(args[1]);
+		    if (gridSize > GRID_MAX || gridSize < GRID_MIN)
+		    {
+			System.err.println("Grid size must be between " + GRID_MIN + " and " + GRID_MAX);
+			System.exit(1);
+		    }
+		    else if (numReqConnect < CONNECTIONS_MIN || numReqConnect > CONNECTIONS_MAX || numReqConnect > gridSize)
+		    {
+			System.err.println("Number of required connections must be between " + CONNECTIONS_MIN + " and " + CONNECTIONS_MAX);
+			System.err.println("Number of required connections must be less than the grid size");
+			System.exit(1);
+		    }
+		    c4 = new GameManager(gridSize, gridSize, numReqConnect);
+	    }
+	    catch (NumberFormatException e)
+	    {
+		System.err.println("Please enter only integers");
+		System.exit(1);
+	    }
+	}
     	currentPlayer = 1;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
@@ -82,6 +115,7 @@ public class ConnectFourGUI {
     private void initComponents() {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         final GameCreator gc = new GameCreator();
         uiPanel = new JPanel() {
             @Override
@@ -209,19 +243,17 @@ public class ConnectFourGUI {
             	int newColumns = Integer.parseInt(columnInput.getText());
             	int newConnections = Integer.parseInt(connectionsInput.getText()); 
 
-            	//TODO: Need to include code to validate that numConnections is not bigger than the number of rows or columns
-            	
-        	if (newRows > ROW_MAX || newRows < ROW_MIN)
+        	if (newRows > GRID_MAX || newRows < GRID_MIN)
         	{
-        	    JOptionPane.showMessageDialog(settingsWindow, "Rows must be between " + ROW_MIN + " and " + ROW_MAX);
+        	    JOptionPane.showMessageDialog(settingsWindow, "Rows must be between " + GRID_MIN + " and " + GRID_MAX);
         	}
-        	else if (newColumns > COLUMN_MAX || newColumns < COLUMN_MIN)
+        	else if (newColumns > GRID_MAX || newColumns < GRID_MIN)
         	{
-        	    JOptionPane.showMessageDialog(settingsWindow, "Columns must be between " + COLUMN_MIN + " and " + COLUMN_MAX);
+        	    JOptionPane.showMessageDialog(settingsWindow, "Columns must be between " + GRID_MIN + " and " + GRID_MAX);
         	}
-        	else if (newConnections > CONNECTIONS_MAX || newConnections < CONNECTIONS_MIN)
+        	else if (newConnections > CONNECTIONS_MAX || newConnections < CONNECTIONS_MIN || newConnections > Math.min(newRows, newColumns))
         	{
-        	    JOptionPane.showMessageDialog(settingsWindow, "Connections must be between " + CONNECTIONS_MIN + " and " + CONNECTIONS_MAX);
+        	    JOptionPane.showMessageDialog(settingsWindow, "Connections must be between " + CONNECTIONS_MIN + " and " + CONNECTIONS_MAX + "\n" + "Connections must be less than the number of rows and columns");
         	}
         	else
         	{
