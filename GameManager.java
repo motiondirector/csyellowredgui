@@ -1,3 +1,5 @@
+import java.awt.Graphics2D;
+
 
 public class GameManager {
 private GameBoard gameBoard;
@@ -11,17 +13,17 @@ private boolean isRunning;
 	
 	public int getReqCon()
 	{
-		return gameBoard.connection;
+		return gameBoard.getConnection();
 	}
 	
 	public int getNumOfColumns()
 	{
-		return gameBoard.gameGrid[0].length;
+		return gameBoard.getColumns();
 	}
 	
 	public int getNumOfRows()
 	{
-		return gameBoard.gameGrid.length;
+		return gameBoard.getRows();
 	}
 	
 	public boolean insert(int player, int column)
@@ -35,9 +37,9 @@ private boolean isRunning;
 		setRunning(true);
 	}
 	
-	public int[][] getGameBoard()
+	public void draw(Graphics2D g2d, int w, int h)
 	{
-		return gameBoard.gameGrid;
+		gameBoard.draw(g2d, w, h);
 	}
 	
 	public void setRunning(boolean running)
@@ -49,4 +51,5 @@ private boolean isRunning;
 	{
 	    return isRunning;
 	}
+	
 }

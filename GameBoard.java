@@ -1,12 +1,16 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
 
 public class GameBoard {
 	
-	protected int[][] gameGrid;
-	protected int connection;
+	private int[][] gameGrid;
+	private int connection;
+	private GridReader winChecker;
 	
 	public GameBoard(int rows, int columns, int reqcon){
 		gameGrid = new int[rows][columns];
 		connection = reqcon;
+		winChecker = new LinearGridReader();
 	}
 	
 	public boolean insertPiece(int player, int column)
@@ -25,177 +29,9 @@ public class GameBoard {
 	private boolean checkWin()
 	{
 		
-		if (checkHorizontal()) {return true;}
-		else if (checkVertical()) {return true;}
-		else if (checkUpperPositiveDiaganols()) {return true;}
-		else if (checkLowerPositiveDiaganols()) {return true;}
-		else if (checkUpperNegativeDiaganols()) {return true;}
-		else if (checkLowerNegativeDiaganols()) {return true;}
-		return false;
+		return winChecker.checkWin(gameGrid, connection);
 	}
 	
-	private boolean checkHorizontal()
-	{
-		for (int i = gameGrid.length -1 ; i >=0; i--)
-		{
-			int p = gameGrid[i][0];
-			int count = 1; 
-			for (int j = 1; j < gameGrid[0].length; j++)
-			{
-				if (p == gameGrid[i][j] && p != 0)
-				{
-					count++;
-					if (count == connection)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					p = gameGrid[i][j];
-					count = 1;
-				}
-			}
-		}
-		return false;
-	}
-	
-	private boolean checkVertical()
-	{
-		for (int j = 0 ; j < gameGrid[0].length; j++)
-		{
-			int p = gameGrid[gameGrid.length-1][j];
-			int count = 1;
-			for (int i = gameGrid.length -2; i >= 0; i--)
-			{
-				if (p == gameGrid[i][j] && p != 0)
-				{
-					count++;
-					if (count == connection)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					p = gameGrid[i][j];
-					count = 1;
-				}
-			}
-		}
-		return false;
-	}
-	
-	private boolean checkUpperPositiveDiaganols()
-	{
-		for (int j = 1; j < gameGrid[0].length; j++)
-		{
-			int p = gameGrid[0][j];
-			int count = 1; 
-			for (int i = 1, k = j-1; k >= 0 && i < gameGrid.length; i++, k--)
-			{
-				if (gameGrid[i][k] == p && p != 0)
-				{
-					count++;
-					if (count == connection)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					p = gameGrid[i][k];
-					count = 1; 
-				}
-			}
-		}
-		return false;
-	}
-	
-	private boolean checkLowerPositiveDiaganols()
-	{
-		int lastColumn = gameGrid[0].length -1; 
-		int lastRow = gameGrid.length -1;
-		
-		for (int i = 1; i <= lastRow -1; i++)
-		{
-			int p = gameGrid[i][lastColumn];
-			int count = 1; 
-			for (int j = lastColumn - 1, k = i+1;  k <= lastRow && j >= 0; k++, j--)
-			{
-				if (gameGrid[k][j] == p && p != 0)
-				{
-					count++;
-					if (count == connection)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					p = gameGrid[k][j];
-					count = 1; 
-				}
-			}
-		}
-		return false;
-	}
-	
-	private boolean checkUpperNegativeDiaganols()
-	{
-		int lastColumn = gameGrid[0].length -1; 
-		
-		for (int j = lastColumn -1; j >= 0; j--)
-		{
-			int p = gameGrid[0][j];
-			int count = 1; 
-			for (int i = 1, k = j+1; k <= lastColumn && i < gameGrid.length; i++, k++)
-			{
-				if (gameGrid[i][k] == p && p != 0)
-				{
-					count++;
-					if (count == connection)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					p = gameGrid[i][k];
-					count = 1; 
-				}
-			}
-		}
-		return false;
-	}
-	private boolean checkLowerNegativeDiaganols()
-	{
-		int lastColumn = gameGrid[0].length -1; 
-		int lastRow = gameGrid.length -1;
-		
-		for (int i = 1; i <= lastRow -1; i++)
-		{
-			int p = gameGrid[i][0];
-			int count = 1; 
-			for (int j = 1, k = i+1; k <= lastRow && j <= lastColumn; j++, k++)
-			{
-				if (gameGrid[k][j] == p && p != 0)
-				{
-					count++;
-					if (count == connection)
-					{
-						return true;
-					}
-				}
-				else
-				{
-					p = gameGrid[k][j];
-					count = 1; 
-				}
-			}
-		}
-		return false;
-	}
 	
 	private boolean canPlace(int i, int j)
 	{
@@ -215,4 +51,58 @@ public class GameBoard {
 		}
 	}
 	
+	public void setWinMethod(GridReader gr)
+	{
+		winChecker = gr;
+	}
+	
+	public void draw(Graphics2D g2d, int w, int h) {
+        
+        int gridCols = gameGrid[0].length;
+        int gridRows = gameGrid.length; 
+        int topOffset = 40; 
+        int sideOffset = 20;
+        int circlePadding = 5;
+        int gridWidth = w - sideOffset * 2;
+        int circleDiameter = gridWidth / gridCols - circlePadding;    
+        int cY = topOffset; 
+        int cX = sideOffset;
+        int[][] thisGame = gameGrid;   
+        
+        for (int i = 0; i < gridRows; i++ ) {
+            
+            for (int g = 0; g < gridCols; g++ ) {
+                if (thisGame[i][g] == 0 ) { // position is open for play
+                    g2d.setColor(Color.CYAN);
+                    g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
+                }
+                else if (thisGame[i][g] == 1 ) { //player one has play this position
+                    g2d.setColor(Color.YELLOW);
+                    g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
+                }
+                else { //player Two has play this position
+                    g2d.setColor(Color.RED);
+                    g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
+                }
+                
+                cX = cX + circleDiameter + circlePadding;
+            }
+            cX = sideOffset;
+            cY = cY + circleDiameter + circlePadding;
+        }
+    }
+	
+	public int getConnection() {
+		return connection;
+	}
+	
+	public int getRows()
+	{
+		return gameGrid.length;
+	}
+	
+	public int getColumns()
+	{
+		return gameGrid[0].length;
+	}
 }

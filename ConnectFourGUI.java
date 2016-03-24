@@ -19,6 +19,7 @@ public class ConnectFourGUI {
     public ConnectFourGUI() {
         initComponents();
     }
+    
 
     public static void main(String[] args) {
 	
@@ -67,7 +68,7 @@ public class ConnectFourGUI {
     }
     
 
-    public void turn(int theX) {
+    private void turn(int theX) {
         
         int thisX = theX;
         int gridWidth = 560;    //dimention fixed for now
@@ -116,14 +117,14 @@ public class ConnectFourGUI {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        final GameCreator gc = new GameCreator();
+        final GameManager gc = c4;
         uiPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics grphcs) {
                 super.paintComponent(grphcs);
                 Graphics2D g2d = (Graphics2D) grphcs;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                gc.draw(g2d, getWidth(), getHeight(), c4.getGameBoard());
+                gc.draw(g2d, getWidth(), getHeight());
             }
 
             @Override
