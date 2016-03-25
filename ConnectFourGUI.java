@@ -117,22 +117,22 @@ public class ConnectFourGUI {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        final GameManager gc = c4;
         uiPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics grphcs) {
                 super.paintComponent(grphcs);
                 Graphics2D g2d = (Graphics2D) grphcs;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                gc.draw(g2d, getWidth(), getHeight());
+                c4.draw(g2d, this.getWidth(), this.getHeight());
             }
 
             @Override
             public Dimension getPreferredSize() {
+            	
                 return new Dimension(600, 600);
             }
         };
-
+        
         uiPanel.setLayout(null);
         uiPanel.setBackground(Color.BLUE);
 
@@ -140,8 +140,8 @@ public class ConnectFourGUI {
         topButton.setBackground(Color.YELLOW);
         topButton.setOpaque(true);
         topButton.setBorderPainted(false);
-
-        uiPanel.add(topButton);
+        
+        
         
         uiPanel.addMouseMotionListener(new MouseMotionListener() {
             public void mouseDragged(MouseEvent e) {// I guess we need this for now
@@ -190,7 +190,7 @@ public class ConnectFourGUI {
                 }
             }
         });
-        
+        uiPanel.add(topButton);
         // =======================NewCode========================================
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Game");
@@ -289,7 +289,7 @@ public class ConnectFourGUI {
         settingsWindow.pack();
         
         frame.setJMenuBar(menuBar);
-
+        
         frame.add(uiPanel);
         frame.pack();
         frame.setVisible(true);
