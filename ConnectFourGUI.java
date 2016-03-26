@@ -234,6 +234,7 @@ public class ConnectFourGUI {
         settingsWindow.add(numCol);
         JTextField columnInput = new JTextField("" + c4.getNumOfColumns());
         settingsWindow.add(columnInput);
+       
         
         JButton saveBtn = new JButton("Save");
         saveBtn.addActionListener(new ActionListener () { 
@@ -289,7 +290,7 @@ public class ConnectFourGUI {
         settingsWindow.pack();
         
         frame.setJMenuBar(menuBar);
-        
+     
         frame.add(uiPanel);
         frame.pack();
         frame.setVisible(true);

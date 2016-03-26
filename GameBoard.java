@@ -74,7 +74,8 @@ public class GameBoard {
         int circleDiameter = gridWidth / gridCols - circlePadding;    
         int cY = topOffset; 
         int cX = sideOffset;
-        int[][] thisGame = gameGrid;   
+        int[][] thisGame = gameGrid; 
+        
         
         
         for (int i = 0; i < gridRows; i++ ) {
