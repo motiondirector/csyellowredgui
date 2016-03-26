@@ -1,6 +1,6 @@
 
 public interface GridReader {
 	
-	boolean checkWin(int[][] gameBoard, int numOfPieces);
+	boolean checkWin(Player[][] gameBoard, int numOfPieces);
 
 }

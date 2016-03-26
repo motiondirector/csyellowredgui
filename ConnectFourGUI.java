@@ -5,7 +5,7 @@ public class ConnectFourGUI {
 	
     JFrame frame = new JFrame();
     private JButton topButton;
-    private static int currentPlayer;
+    private static Player currentPlayer;
     private JPanel uiPanel;
     private static GameManager c4;
     private JFrame settingsWindow;
@@ -56,7 +56,7 @@ public class ConnectFourGUI {
 		System.exit(1);
 	    }
 	}
-    	currentPlayer = 1;
+    	currentPlayer = Player.YELLOW;
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +73,6 @@ public class ConnectFourGUI {
         int gridWidth = uiPanel.getWidth() - (gridOffset * 2);    //dimention fixed for now
         double colW = gridWidth / c4.getNumOfColumns();
         int clickedCol = 0;
-        String plyrClr;
         double colsSum = colW;
        
         
@@ -85,25 +84,21 @@ public class ConnectFourGUI {
                 clickedCol = c4.getNumOfColumns() - 1;
             }
         }
-        if ( currentPlayer == 1) {
-            plyrClr = "yellow ";
-        }
-        else {
-            plyrClr = "red ";
-        }
         
         if (c4.insert(currentPlayer, clickedCol)) {
-            if (currentPlayer == 1){
-                currentPlayer++;
-            }
-            else {
-            	currentPlayer--;
-            }
-            uiPanel.repaint();
             
+            uiPanel.repaint();
             if (c4.hasWin()) {
-            	JOptionPane.showMessageDialog(frame, plyrClr + "player wins", "Game finished", JOptionPane.PLAIN_MESSAGE);
+            	JOptionPane.showMessageDialog(frame, currentPlayer + " player wins", "Game finished", JOptionPane.PLAIN_MESSAGE);
             	c4.setRunning(false);
+            } else {
+        	switch (currentPlayer) {
+                case YELLOW:
+            	currentPlayer = Player.RED;
+            	break;
+                case RED:
+                currentPlayer = Player.YELLOW;
+                }
             }
         }
         
@@ -186,11 +181,13 @@ public class ConnectFourGUI {
         	    return;
                 turn(e.getX()); 
                 
-                if (currentPlayer == 1){
-                    topButton.setBackground(Color.YELLOW); 
-                }
-                else if (currentPlayer == 2) {
-                    topButton.setBackground(Color.RED); 
+                switch (currentPlayer) {
+                case YELLOW:
+                    topButton.setBackground(Color.YELLOW);
+                    break;
+                case RED:
+                    topButton.setBackground(Color.RED);
+                    break;
                 }
             }
         });

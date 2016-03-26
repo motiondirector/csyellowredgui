@@ -31,7 +31,7 @@ private boolean isRunning;
 	    return gameBoard.checkWin();
 	}
 	
-	public boolean insert(int player, int column)
+	public boolean insert(Player player, int column)
 	{
 		return gameBoard.insertPiece(player, column);
 	}

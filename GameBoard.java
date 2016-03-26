@@ -3,17 +3,17 @@ import java.awt.Graphics2D;
 
 public class GameBoard {
 	
-	private int[][] gameGrid;
+	private Player[][] gameGrid;
 	private int connection;
 	private GridReader winChecker;
 	
 	public GameBoard(int rows, int columns, int reqcon){
-		gameGrid = new int[rows][columns];
+		gameGrid = new Player[rows][columns];
 		connection = reqcon;
 		winChecker = new LinearGridReader();
 	}
 	
-	public boolean insertPiece(int player, int column)
+	public boolean insertPiece(Player player, int column)
 	{
 		for (int i = gameGrid.length -1; i >= 0; i--)
 		{
@@ -36,7 +36,7 @@ public class GameBoard {
 	{
 		boolean validArrayIndex = i >= 0 && i < gameGrid.length && j>=0 && j < gameGrid[0].length;
 		if (!validArrayIndex) {return false;}
-		else {return gameGrid[i][j] == 0;}
+		else {return gameGrid[i][j] == null;}
 	}
 	
 	public void clear()
@@ -45,7 +45,7 @@ public class GameBoard {
 		{
 			for (int j = 0; j < gameGrid[0].length; j++)
 			{	
-				gameGrid[i][j] = 0; 
+				gameGrid[i][j] = null; 
 			}
 		}
 	}
@@ -73,18 +73,18 @@ public class GameBoard {
           
         int cY = topOffset;  
         int cX = sideOffset;
-        int[][] thisGame = gameGrid; 
+        Player[][] thisGame = gameGrid; 
         
         
         
         for (int i = 0; i < gridRows; i++ ) {
             
             for (int g = 0; g < gridCols; g++ ) {
-                if (thisGame[i][g] == 0 ) { // position is open for play
+                if (thisGame[i][g] == null ) { // position is open for play
                     g2d.setColor(Color.CYAN);
                     g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
                 }
-                else if (thisGame[i][g] == 1 ) { //player one has play this position
+                else if (thisGame[i][g] == Player.YELLOW ) { //player one has play this position
                     g2d.setColor(Color.YELLOW);
                     g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
                 }
