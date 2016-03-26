@@ -64,15 +64,15 @@ public class GameBoard {
         int sideOffset = 20;
         int circlePadding = 5;
         int gridWidth = w - sideOffset * 2;
-        int gridHeight = h - topOffset;
-        
-        if (gridWidth < gridHeight)
+        int gridHeight = h - topOffset * 2;
+        int circleDiameter = gridWidth / gridCols - circlePadding;  ;
+        if (h < gridRows * circleDiameter + (circlePadding * (gridCols -1)) )
         {
-        	gridWidth = gridHeight;
+        	circleDiameter = gridHeight / gridRows - circlePadding;  
         }
-        
-        int circleDiameter = gridWidth / gridCols - circlePadding;    
-        int cY = topOffset; 
+        sideOffset = (w - ((circleDiameter * gridCols) + (circlePadding * (gridCols -1))))/2;
+          
+        int cY = topOffset;  
         int cX = sideOffset;
         int[][] thisGame = gameGrid; 
         

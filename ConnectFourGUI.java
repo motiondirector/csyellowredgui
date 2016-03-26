@@ -71,10 +71,10 @@ public class ConnectFourGUI {
     private void turn(int theX) {
         
         int thisX = theX;
-        int gridWidth = 560;    //dimention fixed for now
+        int gridOffset = c4.getSideOffset(uiPanel.getWidth(), uiPanel.getHeight());
+        int gridWidth = uiPanel.getWidth() - (gridOffset * 2);    //dimention fixed for now
         double colW = gridWidth / c4.getNumOfColumns();
         int clickedCol = 0;
-        int gridOffset = 20;
         String plyrClr;
         double colsSum = colW;
        
@@ -133,7 +133,7 @@ public class ConnectFourGUI {
             }
         };
         
-        uiPanel.setLayout(null);
+        //uiPanel.setLayout(null);
         uiPanel.setBackground(Color.BLUE);
 
         topButton = new JButton("");
@@ -153,17 +153,23 @@ public class ConnectFourGUI {
             public void mouseMoved(MouseEvent e) {
                 
                 //This needs some love to work on window resize. Ok for now...
-                
-                int mouseX = e.getX() - 30;
+            	
+            	int panelHeight = uiPanel.getHeight();
+            	int panelWidth = uiPanel.getWidth();
+            	int sideOffset = c4.getSideOffset(panelWidth, panelHeight);
+            	int h = 20;
+            	int w = c4.getCircleDiameter(panelWidth, panelHeight);
+            	
+                int mouseX = e.getX() - (w/2);
 
-                if (mouseX < 30 ) {
-                    topButton.setBounds(30, 12, 60, 20);
+                if (mouseX < sideOffset ) {
+                    topButton.setBounds(sideOffset, 12, w, h);
                 }
-                else if (mouseX > 510) {
-                    topButton.setBounds(510, 12, 60, 20);
+                else if (mouseX > panelWidth - sideOffset - w) {
+                    topButton.setBounds(panelWidth-sideOffset - w, 12, w, h);
                 }
                 else {
-                    topButton.setBounds(mouseX, 12, 60, 20);
+                    topButton.setBounds(mouseX, 12, w, h);
                 }  
             }        
         });

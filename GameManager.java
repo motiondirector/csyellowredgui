@@ -52,4 +52,26 @@ private boolean isRunning;
 	    return isRunning;
 	}
 	
+	public int getCircleDiameter(int w, int h)
+	{
+		int gridRows = this.getNumOfRows();
+   	    int gridCols = this.getNumOfColumns();
+   	    int topOffset = 40; 
+        int sideOffset = 20;
+        int circlePadding = 5;
+        int gridWidth = w - sideOffset * 2;
+        int gridHeight = h - topOffset * 2;
+        int circleDiameter = gridWidth / gridCols - circlePadding;  ;
+        if (h < gridRows * circleDiameter + (circlePadding * (gridCols -1)) )
+        {
+        	circleDiameter = gridHeight / gridRows - circlePadding;  
+        }
+        return circleDiameter;
+	}
+	
+	public int getSideOffset(int w, int h)
+	{
+		int circlePadding = 5;
+		return (w - ((this.getCircleDiameter(w, h) * this.getNumOfColumns()) + (circlePadding * (this.getNumOfColumns() -1))))/2;
+	}
 }
