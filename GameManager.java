@@ -26,6 +26,11 @@ private boolean isRunning;
 		return gameBoard.getRows();
 	}
 	
+	public boolean hasWin()
+	{
+	    return gameBoard.checkWin();
+	}
+	
 	public boolean insert(int player, int column)
 	{
 		return gameBoard.insertPiece(player, column);

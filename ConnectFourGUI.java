@@ -10,17 +10,15 @@ public class ConnectFourGUI {
     private static GameManager c4;
     private JFrame settingsWindow;
     
-    //These values should be changed later. 3 and 12 were just random numbers I used for testing purposes.
-    private static final int GRID_MIN = 3;
-    private static final int GRID_MAX = 12;
-    private static final int CONNECTIONS_MIN = 3;
-    private static final int CONNECTIONS_MAX = 12;
+    private static final int GRID_MIN = 2;
+    private static final int GRID_MAX = 20;
+    private static final int CONNECTIONS_MIN = 2;
+    private static final int CONNECTIONS_MAX = 20;
 
     public ConnectFourGUI() {
         initComponents();
     }
     
-
     public static void main(String[] args) {
 	
 	if (args.length == 0)
@@ -47,7 +45,7 @@ public class ConnectFourGUI {
 		    else if (numReqConnect < CONNECTIONS_MIN || numReqConnect > CONNECTIONS_MAX || numReqConnect > gridSize)
 		    {
 			System.err.println("Number of required connections must be between " + CONNECTIONS_MIN + " and " + CONNECTIONS_MAX);
-			System.err.println("Number of required connections must be less than the grid size");
+			System.err.println("Number of required connections must be less than or equal to the grid size");
 			System.exit(1);
 		    }
 		    c4 = new GameManager(gridSize, gridSize, numReqConnect);
@@ -94,21 +92,21 @@ public class ConnectFourGUI {
             plyrClr = "red ";
         }
         
-        boolean hasWin = c4.insert(currentPlayer, clickedCol);
+        if (c4.insert(currentPlayer, clickedCol)) {
+            if (currentPlayer == 1){
+                currentPlayer++;
+            }
+            else {
+            	currentPlayer--;
+            }
+            uiPanel.repaint();
+            
+            if (c4.hasWin()) {
+            	JOptionPane.showMessageDialog(frame, plyrClr + "player wins", "Game finished", JOptionPane.PLAIN_MESSAGE);
+            	c4.setRunning(false);
+            }
+        }
         
-        if (currentPlayer == 1){
-            currentPlayer++;
-        }
-        else {
-        	currentPlayer--;
-        }
-        uiPanel.repaint();
-        
-        if (hasWin)
-        {
-        	JOptionPane.showMessageDialog(frame, plyrClr + "player wins", "Game finished", JOptionPane.PLAIN_MESSAGE);
-        	c4.setRunning(false);
-        }
     }
     
     
@@ -261,7 +259,7 @@ public class ConnectFourGUI {
         	}
         	else if (newConnections > CONNECTIONS_MAX || newConnections < CONNECTIONS_MIN || newConnections > Math.min(newRows, newColumns))
         	{
-        	    JOptionPane.showMessageDialog(settingsWindow, "Connections must be between " + CONNECTIONS_MIN + " and " + CONNECTIONS_MAX + "\n" + "Connections must be less than the number of rows and columns");
+        	    JOptionPane.showMessageDialog(settingsWindow, "Connections must be between " + CONNECTIONS_MIN + " and " + CONNECTIONS_MAX + "\n" + "Connections must be less than or equal to the number of rows and columns");
         	}
         	else
         	{

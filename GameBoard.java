@@ -20,15 +20,14 @@ public class GameBoard {
 			if (canPlace(i, column))
 			{
 				gameGrid [i][column] = player;
-				break;
+				return true;
 			}
 		}
-		return checkWin();
+		return false;
 	}
 	
-	private boolean checkWin()
+	public boolean checkWin()
 	{
-		
 		return winChecker.checkWin(gameGrid, connection);
 	}
 	
