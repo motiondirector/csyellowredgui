@@ -24,7 +24,10 @@ public class ConnectFourGUI {
 	if (args.length == 0)
 	{
 	    //Default
-	    c4 = new GameManager(6, 7, 4);   
+	    final int defaultRows = 6;
+	    final int defaultColumns = 7;
+	    final int defaultConnections = 4;
+	    c4 = new GameManager(defaultRows, defaultColumns, defaultConnections);   
 	}
 	else if (args.length != 2)
 	{
@@ -91,15 +94,13 @@ public class ConnectFourGUI {
             if (c4.hasWin()) {
             	JOptionPane.showMessageDialog(frame, currentPlayer + " player wins", "Game finished", JOptionPane.PLAIN_MESSAGE);
             	c4.setRunning(false);
-            } else {
-        	switch (currentPlayer) {
-                case YELLOW:
-            	currentPlayer = Player.RED;
-            	break;
-                case RED:
-                currentPlayer = Player.YELLOW;
-                break;
-                }
+            } 
+            //Changes current player
+            else if (currentPlayer == Player.YELLOW){
+        	currentPlayer = Player.RED;
+            }
+            else {
+        	currentPlayer = Player.YELLOW;
             }
         }
         
@@ -145,24 +146,23 @@ public class ConnectFourGUI {
              */
             public void mouseMoved(MouseEvent e) {
                 
-                //
-            	
             	int panelHeight = uiPanel.getHeight();
             	int panelWidth = uiPanel.getWidth();
             	int sideOffset = c4.getSideOffset(panelWidth, panelHeight);
-            	int h = 20;
-            	int w = c4.getCircleDiameter(panelWidth, panelHeight);
+            	int topOffset = 12;
+            	int buttonHeight = 20;
+            	int buttonWidth = c4.getCircleDiameter(panelWidth, panelHeight);
             	
-                int mouseX = e.getX() - (w/2);
+                int mouseX = e.getX() - (buttonWidth/2);
 
                 if (mouseX < sideOffset ) {
-                    topButton.setBounds(sideOffset, 12, w, h);
+                    topButton.setBounds(sideOffset, topOffset, buttonWidth, buttonHeight);
                 }
-                else if (mouseX > panelWidth - sideOffset - w) {
-                    topButton.setBounds(panelWidth-sideOffset - w, 12, w, h);
+                else if (mouseX > panelWidth - sideOffset - buttonWidth) {
+                    topButton.setBounds(panelWidth-sideOffset - buttonWidth, topOffset, buttonWidth, buttonHeight);
                 }
                 else {
-                    topButton.setBounds(mouseX, 12, w, h);
+                    topButton.setBounds(mouseX, topOffset, buttonWidth, buttonHeight);
                 }  
             }        
         });
@@ -181,16 +181,14 @@ public class ConnectFourGUI {
         	    return;
                 turn(e.getX()); 
                 
-                switch (currentPlayer) {
-                case YELLOW:
+                //Changes the color of the top button to the corresponding player
+                if (currentPlayer == Player.YELLOW)
                     topButton.setBackground(Color.YELLOW);
-                    break;
-                case RED:
+                else
                     topButton.setBackground(Color.RED);
-                    break;
                 }
             }
-        });
+        );
         uiPanel.add(topButton);
    
         JMenuBar menuBar = new JMenuBar();
@@ -219,7 +217,8 @@ public class ConnectFourGUI {
 
 
         settingsWindow = new JFrame();
-        settingsWindow.setLayout(new GridLayout(10, 10)); //Fixed size?
+        settingsWindow.setLayout(new GridLayout());
+        settingsWindow.setResizable(false);
         final JTextField reqConnections = new JTextField("Required Connections: ");
         reqConnections.setEditable(false);
         settingsWindow.add(reqConnections);

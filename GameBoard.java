@@ -53,15 +53,15 @@ public class GameBoard {
 	
 	/**
 	 * Private helper method to check if a piece can be placed in the specified position
-	 * @param i the row that the piece is going to be placed into
-	 * @param j the column that the piece is going to be placed into
+	 * @param row the row that the piece is going to be placed into
+	 * @param column the column that the piece is going to be placed into
 	 * @return true if the piece can be placed, false otherwise
 	 */
-	private boolean canPlace(int i, int j)
+	private boolean canPlace(int row, int column)
 	{
-		boolean validArrayIndex = i >= 0 && i < gameGrid.length && j>=0 && j < gameGrid[0].length;
+		boolean validArrayIndex = row >= 0 && row < gameGrid.length && column>=0 && column < gameGrid[0].length;
 		if (!validArrayIndex) {return false;}
-		else {return gameGrid[i][j] == null;}
+		else {return gameGrid[row][column] == null;}
 	}
 	
 	/**

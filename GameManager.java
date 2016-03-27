@@ -67,7 +67,7 @@ private boolean isRunning;
 	}
 	
 	/**
-	 * Clears the baord and starts a new game
+	 * Clears the board and starts a new game
 	 */
 	public void newGame()
 	{
@@ -78,13 +78,13 @@ private boolean isRunning;
 	/**
 	 * Draws the game board
 	 * @param g2d
-	 * @param w the width of the container containing the game board
-	 * @param h the height of the container containing the game board
+	 * @param width the width of the container containing the game board
+	 * @param height the height of the container containing the game board
 	 */
-	public void draw(Graphics2D g2d, int w, int h)
+	public void draw(Graphics2D g2d, int width, int height)
 	{
 		int topOffset = 40;
-		gameBoard.draw(g2d, this.getSideOffset(w, h), topOffset, this.getCircleDiameter(w, h));
+		gameBoard.draw(g2d, this.getSideOffset(width, height), topOffset, this.getCircleDiameter(width, height));
 	}
 	
 	/**
@@ -107,21 +107,21 @@ private boolean isRunning;
 	
 	/**
 	 * Calculates the circle diameter needed based on the given width and height
-	 * @param w the width of the container
-	 * @param h the height of the container
+	 * @param width the width of the container
+	 * @param height the height of the container
 	 * @return the expected circle diameter
 	 */
-	public int getCircleDiameter(int w, int h)
+	public int getCircleDiameter(int width, int height)
 	{
 		int gridRows = this.getNumOfRows();
    	    int gridCols = this.getNumOfColumns();
    	    int topOffset = 40; 
         int sideOffset = 20;
         int circlePadding = 5;
-        int gridWidth = w - sideOffset * 2;
-        int gridHeight = h - topOffset * 2;
+        int gridWidth = width - sideOffset * 2;
+        int gridHeight = height - topOffset * 2;
         int circleDiameter = gridWidth / gridCols - circlePadding;  ;
-        if (h < gridRows * circleDiameter + (circlePadding * (gridCols -1)) + topOffset )
+        if (height < gridRows * circleDiameter + (circlePadding * (gridCols -1)) + topOffset )
         {
         	circleDiameter = gridHeight / gridRows - circlePadding;  
         }
@@ -130,13 +130,13 @@ private boolean isRunning;
 	
 	/**
 	 * Calculates the side offset needed based on the given width and height
-	 * @param w the width of the container
-	 * @param h the height of the container
+	 * @param width the width of the container
+	 * @param height the height of the container
 	 * @return the calculated side offset
 	 */
-	public int getSideOffset(int w, int h)
+	public int getSideOffset(int width, int height)
 	{
 		int circlePadding = 5;
-		return (w - ((this.getCircleDiameter(w, h) * this.getNumOfColumns()) + (circlePadding * (this.getNumOfColumns() -1))))/2;
+		return (width - ((this.getCircleDiameter(width, height) * this.getNumOfColumns()) + (circlePadding * (this.getNumOfColumns() -1))))/2;
 	}
 }
