@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 public class ConnectFourGUI {
 	
-    JFrame frame = new JFrame();
+    private JFrame frame;
     private JButton topButton;
     private static Player currentPlayer;
     private JPanel uiPanel;
@@ -70,7 +70,7 @@ public class ConnectFourGUI {
         
         int thisX = theX;
         int gridOffset = c4.getSideOffset(uiPanel.getWidth(), uiPanel.getHeight());
-        int gridWidth = uiPanel.getWidth() - (gridOffset * 2);    //dimention fixed for now
+        int gridWidth = uiPanel.getWidth() - (gridOffset * 2);    
         double colW = gridWidth / c4.getNumOfColumns();
         int clickedCol = 0;
         double colsSum = colW;
@@ -107,7 +107,7 @@ public class ConnectFourGUI {
     
 
     private void initComponents() {
-
+    	frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         uiPanel = new JPanel() {
@@ -126,7 +126,6 @@ public class ConnectFourGUI {
             }
         };
         
-        //uiPanel.setLayout(null);
         uiPanel.setBackground(Color.BLUE);
 
         topButton = new JButton("");
@@ -145,7 +144,7 @@ public class ConnectFourGUI {
              */
             public void mouseMoved(MouseEvent e) {
                 
-                //This needs some love to work on window resize. Ok for now...
+                //
             	
             	int panelHeight = uiPanel.getHeight();
             	int panelWidth = uiPanel.getWidth();
@@ -192,7 +191,7 @@ public class ConnectFourGUI {
             }
         });
         uiPanel.add(topButton);
-        // =======================NewCode========================================
+   
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("Game");
         menuBar.add(fileMenu);
@@ -274,7 +273,6 @@ public class ConnectFourGUI {
         });
         
         //Exits the window and resets the text fields to previous values if user hits cancel
-        //TODO: If user exits the window by hitting "X" or pressing alt+f4(Windows) or command-w(Mac), then the text fields do not get reset. Need to fix this somehow.
         JButton cancelBtn = new JButton("Cancel");
         cancelBtn.addActionListener(new ActionListener () { 
             @Override 

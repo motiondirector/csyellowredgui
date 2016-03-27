@@ -44,7 +44,8 @@ private boolean isRunning;
 	
 	public void draw(Graphics2D g2d, int w, int h)
 	{
-		gameBoard.draw(g2d, w, h);
+		int topOffset = 40;
+		gameBoard.draw(g2d, this.getSideOffset(w, h), topOffset, this.getCircleDiameter(w, h));
 	}
 	
 	public void setRunning(boolean running)
@@ -67,7 +68,7 @@ private boolean isRunning;
         int gridWidth = w - sideOffset * 2;
         int gridHeight = h - topOffset * 2;
         int circleDiameter = gridWidth / gridCols - circlePadding;  ;
-        if (h < gridRows * circleDiameter + (circlePadding * (gridCols -1)) )
+        if (h < gridRows * circleDiameter + (circlePadding * (gridCols -1)) + topOffset )
         {
         	circleDiameter = gridHeight / gridRows - circlePadding;  
         }

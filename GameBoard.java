@@ -55,48 +55,35 @@ public class GameBoard {
 		winChecker = gr;
 	}
 	
-	public void draw(Graphics2D g2d, int w, int h) {
+	public void draw(Graphics2D g2d, int x, int y, int circleDiameter) {
         
+		int gridRows = gameGrid.length;
         int gridCols = gameGrid[0].length;
-        int gridRows = gameGrid.length; 
-        int topOffset = 40; 
-        int sideOffset = 20;
         int circlePadding = 5;
-        int gridWidth = w - sideOffset * 2;
-        int gridHeight = h - topOffset * 2;
-        int circleDiameter = gridWidth / gridCols - circlePadding;  ;
-        if (h < gridRows * circleDiameter + (circlePadding * (gridCols -1)) )
-        {
-        	circleDiameter = gridHeight / gridRows - circlePadding;  
-        }
-        sideOffset = (w - ((circleDiameter * gridCols) + (circlePadding * (gridCols -1))))/2;
-          
-        int cY = topOffset;  
-        int cX = sideOffset;
-        Player[][] thisGame = gameGrid; 
+        int initial_x = x; 
         
         
         
         for (int i = 0; i < gridRows; i++ ) {
             
             for (int g = 0; g < gridCols; g++ ) {
-                if (thisGame[i][g] == null ) { // position is open for play
+                if (gameGrid[i][g] == null ) { // position is open for play
                     g2d.setColor(Color.CYAN);
-                    g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
+                    g2d.fillOval(x, y,circleDiameter, circleDiameter);
                 }
-                else if (thisGame[i][g] == Player.YELLOW ) { //player one has play this position
+                else if (gameGrid[i][g] == Player.YELLOW ) { //player one has play this position
                     g2d.setColor(Color.YELLOW);
-                    g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
+                    g2d.fillOval(x, y,circleDiameter, circleDiameter);
                 }
                 else { //player Two has play this position
                     g2d.setColor(Color.RED);
-                    g2d.fillOval(cX, cY,circleDiameter, circleDiameter);
+                    g2d.fillOval(x, y,circleDiameter, circleDiameter);
                 }
                 
-                cX = cX + circleDiameter + circlePadding;
+                x = x + circleDiameter + circlePadding;
             }
-            cX = sideOffset;
-            cY = cY + circleDiameter + circlePadding;
+            x = initial_x;
+            y = y + circleDiameter + circlePadding;
         }
     }
 	
