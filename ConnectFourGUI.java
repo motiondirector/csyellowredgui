@@ -98,6 +98,7 @@ public class ConnectFourGUI {
             	break;
                 case RED:
                 currentPlayer = Player.YELLOW;
+                break;
                 }
             }
         }

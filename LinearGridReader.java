@@ -1,6 +1,13 @@
 
+/**
+ * Linear grid reader checks for horizontal, vertical, or diagonal winning conditions
+ */
 public class LinearGridReader implements GridReader {
 	
+    /**
+     * {@inheritDoc}
+     */
+    @Override
 	public boolean checkWin(Player[][] gameGrid, int numOfPieces)
 	{
 		
@@ -13,6 +20,12 @@ public class LinearGridReader implements GridReader {
 		return false;
 	}
 	
+    /**
+     * Private helper method to check for a horizontal win
+     * @param gameGrid the game grid to check
+     * @param numOfPieces the number of pieces that need to be found in a row to win
+     * @return true if winning condition was fulfilled
+     */
 	private boolean checkHorizontal(Player[][] gameGrid, int numOfPieces)
 	{
 		for (int i = gameGrid.length -1 ; i >=0; i--)
@@ -39,6 +52,13 @@ public class LinearGridReader implements GridReader {
 		return false;
 	}
 	
+
+	    /**
+	     * Private helper method to check for a vertical win
+	     * @param gameGrid the game grid to check
+	     * @param numOfPieces the number of pieces that need to be found in a row to win
+	     * @return true if winning condition was fulfilled
+	     */
 	private boolean checkVertical(Player[][] gameGrid, int numOfPieces)
 	{
 		for (int j = 0 ; j < gameGrid[0].length; j++)
@@ -64,7 +84,13 @@ public class LinearGridReader implements GridReader {
 		}
 		return false;
 	}
-	
+
+	    /**
+	     * Private helper method to check for a upper position diagonal win
+	     * @param gameGrid the game grid to check
+	     * @param numOfPieces the number of pieces that need to be found in a row to win
+	     * @return true if winning condition was fulfilled
+	     */
 	private boolean checkUpperPositiveDiaganols(Player[][] gameGrid, int numOfPieces)
 	{
 		for (int j = 1; j < gameGrid[0].length; j++)
@@ -90,7 +116,13 @@ public class LinearGridReader implements GridReader {
 		}
 		return false;
 	}
-	
+
+	    /**
+	     * Private helper method to check for a lower positive diagonal win
+	     * @param gameGrid the game grid to check
+	     * @param numOfPieces the number of pieces that need to be found in a row to win
+	     * @return true if winning condition was fulfilled
+	     */
 	private boolean checkLowerPositiveDiaganols(Player[][] gameGrid, int numOfPieces)
 	{
 		int lastColumn = gameGrid[0].length -1; 
@@ -119,7 +151,13 @@ public class LinearGridReader implements GridReader {
 		}
 		return false;
 	}
-	
+
+	    /**
+	     * Private helper method to check for a upper negative diagonal win
+	     * @param gameGrid the game grid to check
+	     * @param numOfPieces the number of pieces that need to be found in a row to win
+	     * @return true if winning condition was fulfilled
+	     */
 	private boolean checkUpperNegativeDiaganols(Player[][] gameGrid, int numOfPieces)
 	{
 		int lastColumn = gameGrid[0].length -1; 
@@ -147,6 +185,13 @@ public class LinearGridReader implements GridReader {
 		}
 		return false;
 	}
+
+	    /**
+	     * Private helper method to check for a lower negative diagonal win
+	     * @param gameGrid the game grid to check
+	     * @param numOfPieces the number of pieces that need to be found in a row to win
+	     * @return true if winning condition was fulfilled
+	     */
 	private boolean checkLowerNegativeDiaganols(Player[][] gameGrid, int numOfPieces)
 	{
 		int lastColumn = gameGrid[0].length -1; 
