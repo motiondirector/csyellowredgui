@@ -219,20 +219,20 @@ public class ConnectFourGUI {
 
         settingsWindow = new JFrame();
         settingsWindow.setLayout(new GridLayout(10, 10)); //Fixed size?
-        JTextField reqConnections = new JTextField("Required Connections: ");
+        final JTextField reqConnections = new JTextField("Required Connections: ");
         reqConnections.setEditable(false);
         settingsWindow.add(reqConnections);
-        JTextField connectionsInput = new JTextField("" + c4.getReqCon());
+        final JTextField connectionsInput = new JTextField("" + c4.getReqCon());
         settingsWindow.add(connectionsInput);
-        JTextField numRows = new JTextField("Current # of Rows: ");
+        final JTextField numRows = new JTextField("Current # of Rows: ");
         numRows.setEditable(false);
         settingsWindow.add(numRows);
-        JTextField rowsInput = new JTextField("" + c4.getNumOfRows());
+        final JTextField rowsInput = new JTextField("" + c4.getNumOfRows());
         settingsWindow.add(rowsInput);
-        JTextField numCol = new JTextField("Current # of Columns: ");
+        final JTextField numCol = new JTextField("Current # of Columns: ");
         numCol.setEditable(false);
         settingsWindow.add(numCol);
-        JTextField columnInput = new JTextField("" + c4.getNumOfColumns());
+        final JTextField columnInput = new JTextField("" + c4.getNumOfColumns());
         settingsWindow.add(columnInput);
        
         
